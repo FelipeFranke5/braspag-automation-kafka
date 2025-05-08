@@ -14,8 +14,8 @@ fi
 ssh -i "$SSH_KEY_PATH" "$EC2_USER@$EC2_HOST" << EOF
     sudo su << EOF
         echo "Installing Python and its dependencies"
-        apt-get update
-        apt-get upgrade
+        apt-get update -y
+        apt-get upgrade -y
         apt install -y python3 python3-pip python3-venv
         apt install -y build-essential python3-dev
         apt install -y libssl-dev libffi-dev
