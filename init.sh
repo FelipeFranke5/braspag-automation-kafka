@@ -33,5 +33,5 @@ ssh -i "$SSH_KEY_PATH" "$EC2_USER@$EC2_HOST" << EOF
         echo "Initilizing main script"
         chmod +x ./init_inside_ssh.sh
         ./init_inside_ssh.sh
-    EOF
-EOF
+    << EOF
+<< EOF
