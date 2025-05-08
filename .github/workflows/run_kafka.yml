@@ -1,0 +1,26 @@
+name: Deploy to AWS EC2
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Setup SSH
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/aws-key.pem
+        chmod 600 ~/.ssh/aws-key.pem
+        ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
+    - name: Execute Initilization Script
+      run: |
+        chmod +x ./init.sh
+        ./init.sh ${{ secrets.EC2_HOST }} ${{ secrets.EC2_USER }} ~/.ssh/aws-key.pem
